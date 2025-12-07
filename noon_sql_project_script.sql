@@ -34,4 +34,16 @@ from cte
 group by first_order_date
 order by first_order_date;
 
+-- Count of all the users who were acquired in Jan 2025 and only place one order in Jan and did not place any other order
+
+select customer_code, count(*) as no_of_orders
+from orders
+where month(placed_at)=1 and year(placed_at)=2025 and
+  customer_code not in (
+		select distinct(customer_code
+		from orders
+		where not (month(placed_at)=1 and year(placed_at)=2025)
+group by customer_code
+having count(*)=1;
+
 
