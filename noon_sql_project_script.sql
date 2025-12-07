@@ -34,7 +34,7 @@ from cte
 group by first_order_date
 order by first_order_date;
 
--- Count of all the users who were acquired in Jan 2025 and only place one order in Jan and did not place any other order
+-- Q.Count of all the users who were acquired in Jan 2025 and only place one order in Jan and did not place any other order
 
 select customer_code, count(*) as no_of_orders
 from orders
@@ -91,6 +91,18 @@ select customer_code, count(*) as number_of_orders, count(promo_code_name) as pr
 from orders
 group by customer_code
 having count(*) > 1 and count(*)=count(promo_code_name)
+
+-- Q. What percent of customers were organically acquired in Jan 2025. (Placed their first order without promo code)
+
+with cte as (
+	select *, 
+	row_number() over(partition by customer_code order by placed at) as rn
+	from orders
+	where month(placed_at) = 1
+)
+select count(case when rn = 1 and promo_code_name is null then customer_code end)*100.0/count(distinct customer_code)
+from cte;
+
 
 
 
