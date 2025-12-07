@@ -1,5 +1,3 @@
-# Noon-Restaurant-Orders-Data-Analysis
-
 # 🍔 Restaurant Orders Data Analysis & Key Performance Metrics (KPMs) using SQL
 
 ## 🚀 Project Overview
