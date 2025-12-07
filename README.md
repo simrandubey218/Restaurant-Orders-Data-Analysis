@@ -6,4 +6,12 @@ Case - Noon launched food items in Dubai on 1st of January and the line manager 
 
 Table Name - orders
 
-<img width="824" height="270" alt="Screenshot 2025-12-07 160323" src="https://github.com/user-attachments/assets/fcead2fd-a3bc-4632-8b32-ead0ee60e413" />
+<img width="750" height="250" alt="Screenshot 2025-12-07 160323" src="https://github.com/user-attachments/assets/fcead2fd-a3bc-4632-8b32-ead0ee60e413" />
+
+
+
+
+
+
+
+**This database project has been designed by Ankit Bansal. I have used the dataset for practice purpose.**
