@@ -68,4 +68,14 @@ WHERE
     AND cs.first_order_date < DATEADD(month, -1, GETDATE()) 
     AND o.promo_code_name IS NOT NULL;
 
+-- A trigger query that will target customers after their every third order with a personalised communication
+
+with cte as (
+	select cutomer_code, placed_at,
+      row_number() over (partition by customer_code order by placed_at asc) as rn
+    from orders )
+select * from cte
+where cte.rn%3=0 and cast(placed_at as date) = cat(getdate() as date);
+
+
 
