@@ -46,4 +46,26 @@ where month(placed_at)=1 and year(placed_at)=2025 and
 group by customer_code
 having count(*)=1;
 
+-- Q. List all the customers with no order in last 7 days but were acquired one month ago with their first order on promo
+
+WITH CustomerSummary AS (
+  SELECT
+      customer_code,
+      MIN(placed_at) AS first_order_date,  
+      MAX(placed_at) AS latest_order_date  
+  FROM orders
+  GROUP BY customer_code
+)
+SELECT
+    cs.*,
+    o.promo_code_name AS first_order_promo
+FROM CustomerSummary cs
+INNER JOIN orders o
+ON cs.customer_code = o.customer_code 
+    AND cs.first_order_date = o.placed_at
+WHERE
+    cs.latest_order_date < DATEADD(day, -7, GETDATE())
+    AND cs.first_order_date < DATEADD(month, -1, GETDATE()) 
+    AND o.promo_code_name IS NOT NULL;
+
 
