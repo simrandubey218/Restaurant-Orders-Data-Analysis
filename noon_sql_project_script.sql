@@ -68,7 +68,7 @@ WHERE
     AND cs.first_order_date < DATEADD(month, -1, GETDATE()) 
     AND o.promo_code_name IS NOT NULL;
 
--- A trigger query that will target customers after their every third order with a personalised communication
+-- Q. A trigger query that will target customers after their every third order with a personalised communication
 
 with cte as (
 	select cutomer_code, placed_at,
@@ -76,6 +76,23 @@ with cte as (
     from orders )
 select * from cte
 where cte.rn%3=0 and cast(placed_at as date) = cat(getdate() as date);
+
+--Q.Customers who placed more than one order and all of their orders on promo only
+
+-- This query first filters out all non-promoted orders, and then counts the remaining promoted orders. Hence, an incorrect approach.
+select customer_code, count(*) as number_of_orders
+from orders
+where promo_code_name is not null
+group by customer_code
+having count(*) > 1;
+
+-- Correct Solution
+select customer_code, count(*) as number_of_orders, count(promo_code_name) as promo_orders
+from orders
+group by customer_code
+having count(*) > 1 and count(*)=count(promo_code_name)
+
+
 
 
 
